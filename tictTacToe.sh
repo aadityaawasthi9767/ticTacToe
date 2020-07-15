@@ -13,11 +13,11 @@ declare -a playBoard;
 function reset(){
 
 player=$((START));
-for((rowIndex=0;rowIndex<=$ROW;rowIndex++))
+for((columnIndex=0;columnIndex<=$COLUMN;columnIndex++))
 do
-	for((columnIndex=0;columnIndex<=$COLUMN;columnIndex++))
+	for((rowIndex=0;rowIndex<=$ROW;rowIndex++))
 	do
-		playBoard[$rowIndex,$columnIndex]=0;
+		playBoard[$rowIndex,$columnIndex]='BLANK';
 	done
 done
 echo "Board Resetted";
@@ -38,10 +38,10 @@ esac
 function selectionSymbol(){
 
 read -p "Choose a Symbol 'X' or 'O':" playerSymbol;
-if [[ $playerSymbol =~ 'X' ]]
+if [[ $playerSymbol =~ 'X' || $playerSymbol =~ 'x' ]]
 then
 	computerSymbol='O';
-elif [[ $playerSymbol =~ 'O' ]]
+elif [[ $playerSymbol =~ 'O' || $playerSymbol =~ 'o' ]]
 then
 	computerSymbol='X';
 fi
@@ -65,5 +65,18 @@ fi
  echo "computer symbol:" $computerSymbol;
 }
 
+function displayBoard(){
+
+for((columnIndex=0;columnIndex<=$COLUMN;columnIndex++))
+do
+   for((rowIndex=0;rowIndex<=$ROW;rowIndex++))
+   do
+      echo ${playBoard[$rowIndex,$columnIndex]};
+   done
+done
+
+}
+
 reset
 tossCoin
+displayBoard
