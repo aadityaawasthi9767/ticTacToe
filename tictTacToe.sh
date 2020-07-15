@@ -1,11 +1,11 @@
-#! /bin/bash
+#! /bin/bash -x
 
 #CONSTANTS
 START=0;
 ROW=2;
 COLUMN=2;
 HEAD=0;
-TAIL=1;
+TALE=1;
 
 #ARRAY
 declare -a playBoard;
@@ -28,7 +28,7 @@ toss=$((RANDOM%2));
 case $toss in 
 	$HEAD)
 			selectionSymbol;;
-	$TAIL)
+	$TALE)
 			alottedSymbol;;
 		*)
 			echo "Wrong Turn";;
@@ -45,8 +45,7 @@ elif [[ $playerSymbol =~ 'O' || $playerSymbol =~ 'o' ]]
 then
 	computerSymbol='X';
 fi
-playerSetSymbol=$(winTieNextMove $playerSymbol)
-computerSetSymbol=$(winTieNextMove $computerSymbol)
+$(winTieNextMove $playerSymbol $computerSymbol)
 }
 
 function alottedSymbol(){
@@ -62,8 +61,7 @@ then
 	playerSymbol='O';
 fi
  echo "player symbol:" $playerSymbol "computer symbol:" $computerSymbol;
-playerSetSymbol=$(winTieNextMove $playerSymbol)
-computerSetSymbol=$(winTieNextMove $computerSymbol)
+$(winTieNextMove $playerSymbol $computerSymbol)
 
 }
 
@@ -81,8 +79,8 @@ done
 
 function winTieNextMove(){
 
-computerSymbol=$1;
-playerSymbol=$2;
+computerSymbol=$2;
+playerSymbol=$1;
 
 if [[ (${playBoard[0,0]} -eq ${playBoard[0,1]} && ${playBoard[0,1]} -eq ${playBoard[0,2]}) || (${playBoard[0,0]} -eq ${playBoard[1,0]} && ${playBoard[1,0]} -eq ${playBoard[2,0]}) ]]
 	then
