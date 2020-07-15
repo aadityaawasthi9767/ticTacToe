@@ -1,4 +1,4 @@
-#! /bin/bash -
+#! /bin/bash
 
 #CONSTANTS
 START=0;
@@ -27,14 +27,43 @@ function tossCoin(){
 toss=$((RANDOM%2));
 case $toss in 
 	$HEAD)
-			echo "Its HEAD! Its PLAYER Turn:";;
+			selectionSymbol;;
 	$TAIL)
-			echo "Its TAILS! Its COMPUTER Turn";;
-	*)
+			alottedSymbol;;
+		*)
 			echo "Wrong Turn";;
 esac
 }
 
+function selectionSymbol(){
+
+read -p "Choose a Symbol 'X' or 'O':" playerSymbol;
+if [[ $playerSymbol =~ 'X' ]]
+then
+	computerSymbol='O';
+elif [[ $playerSymbol =~ 'O' ]]
+then
+	computerSymbol='X';
+fi
+ echo "player symbol:" $playerSymbol;
+ echo "computer symbol:" $computerSymbol;
+}
+
+function alottedSymbol(){
+
+check=$((RANDOM%2))
+if [[ $check -eq 0 ]]
+then
+	computerSymbol='O';
+	playerSymbol='X';
+elif [[ $check -eq 1 ]]
+then
+	computerSymbol='X';
+	playerSymbol='O';
+fi
+ echo "player symbol:" $playerSymbol;
+ echo "computer symbol:" $computerSymbol;
+}
 
 reset
 tossCoin
