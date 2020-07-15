@@ -45,8 +45,8 @@ elif [[ $playerSymbol =~ 'O' || $playerSymbol =~ 'o' ]]
 then
 	computerSymbol='X';
 fi
- echo "player symbol:" $playerSymbol;
- echo "computer symbol:" $computerSymbol;
+playerSetSymbol=$(winTieNextMove $playerSymbol)
+computerSetSymbol=$(winTieNextMove $computerSymbol)
 }
 
 function alottedSymbol(){
@@ -61,8 +61,10 @@ then
 	computerSymbol='X';
 	playerSymbol='O';
 fi
- echo "player symbol:" $playerSymbol;
- echo "computer symbol:" $computerSymbol;
+ echo "player symbol:" $playerSymbol "computer symbol:" $computerSymbol;
+playerSetSymbol=$(winTieNextMove $playerSymbol)
+computerSetSymbol=$(winTieNextMove $computerSymbol)
+
 }
 
 function displayBoard(){
@@ -77,6 +79,44 @@ done
 
 }
 
+function winTieNextMove(){
+
+computerSymbol=$1;
+playerSymbol=$2;
+
+if [[ (${playBoard[0,0]} -eq ${playBoard[0,1]} && ${playBoard[0,1]} -eq ${playBoard[0,2]}) || (${playBoard[0,0]} -eq ${playBoard[1,0]} && ${playBoard[1,0]} -eq ${playBoard[2,0]}) ]]
+	then
+		echo "You Win";
+elif [[ (${playBoard[1,0]} -eq ${playBoard[1,1]} && ${playBoard[1,1]} -eq ${playBoard[1,2]}) || (${playBoard[0,1]} -eq ${playBoard[1,1]} && ${playBoard[1,1]} -eq ${playBoard[2,1]}) ]]
+	then
+		echo "You Win";
+elif [[ (${playBoard[2,0]} -eq ${playBoard[2,1]} && ${playBoard[2,1]} -eq ${playBoard[2,2]}) || (${playBoard[0,2]} -eq ${playBoard[1,2]} && ${playBoard[1,2]} -eq ${playBoard[2,2]}) ]]
+	then
+		echo "You Win";
+elif [[ (${playBoard[0,0]} -eq ${playBoard[1,1]} && ${playBoard[1,1]} -eq ${playBoard[2,2]}) || (${playBoard[0,2]} -eq ${playBoard[1,1]} && ${playBoard[1,1]} -eq ${playBoard[2,0]}) ]]
+	then
+		echo "You Win";
+elif [[ (${playBoard[0,0]} -eq ${playBoard[0,1]} || ${playBoard[0,1]} -eq ${playBoard[0,2]}) && (${playBoard[0,0]} -eq ${playBoard[1,0]} || ${playBoard[1,0]} -eq ${playBoard[2,0]}) ]]
+   then
+      echo "Game Tie";
+elif [[ (${playBoard[1,0]} -eq ${playBoard[1,1]} || ${playBoard[1,1]} -eq ${playBoard[1,2]}) && (${playBoard[0,1]} -eq ${playBoard[1,1]} || ${playBoard[1,1]} -eq ${playBoard[2,1]}) ]]
+   then
+      echo "Game Tie";
+elif [[ (${playBoard[2,0]} -eq ${playBoard[2,1]} || ${playBoard[2,1]} -eq ${playBoard[2,2]}) && (${playBoard[0,2]} -eq ${playBoard[1,2]} || ${playBoard[1,2]} -eq ${playBoard[2,2]}) ]]
+   then
+      echo "Game Tie";
+elif [[ (${playBoard[0,0]} -eq ${playBoard[1,1]} || ${playBoard[1,1]} -eq ${playBoard[2,2]}) && (${playBoard[0,2]} -eq ${playBoard[1,1]} || ${playBoard[1,1]} -eq ${playBoard[2,0]}) ]]
+   then
+      echo "Game Tie";
+else
+	echo "You Lost";
+fi
+}
+
+
+
+
 reset
 tossCoin
 displayBoard
+winTieNextMove
