@@ -1,16 +1,18 @@
-#! /bin/bash -x
+#! /bin/bash -
 
-#variables
+#CONSTANTS
 START=0;
 ROW=2;
-COLUMN=0;
+COLUMN=2;
+HEAD=0;
+TAIL=1;
 
 #ARRAY
 declare -a playBoard;
 
 function reset(){
-player=$((START));
 
+player=$((START));
 for((rowIndex=0;rowIndex<=$ROW;rowIndex++))
 do
 	for((columnIndex=0;columnIndex<=$COLUMN;columnIndex++))
@@ -20,4 +22,19 @@ do
 done
 echo "Board Resetted";
 }
+
+function tossCoin(){
+toss=$((RANDOM%2));
+case $toss in 
+	$HEAD)
+			echo "Its HEAD! Its PLAYER Turn:";;
+	$TAIL)
+			echo "Its TAILS! Its COMPUTER Turn";;
+	*)
+			echo "Wrong Turn";;
+esac
+}
+
+
 reset
+tossCoin
